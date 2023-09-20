@@ -3,7 +3,6 @@ import time
 import asyncio
 
 from huggingface_hub import snapshot_download
-
 from langchain.llms import DeepSparse
 
 MODEL_ID = "mgoin/TinyStories-1M-deepsparse"
