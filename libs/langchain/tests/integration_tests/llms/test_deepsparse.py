@@ -1,29 +1,26 @@
 """Test DeepSparse wrapper."""
+import time
+import asyncio
+
+from huggingface_hub import snapshot_download
+
 from langchain.llms import DeepSparse
+
+MODEL_ID = "mgoin/TinyStories-1M-deepsparse"
+MODEL_PATH = snapshot_download(repo_id=MODEL_ID)
 
 
 def test_deepsparse_call() -> None:
     """Test valid call to DeepSparse."""
-    config = {"max_generated_tokens": 5, "use_deepsparse_cache": False}
+    config = {"prompt_sequence_length": 1}
+    llm = DeepSparse(model=MODEL_PATH, config=config)
 
-    llm = DeepSparse(
-        model="zoo:nlg/text_generation/codegen_mono-350m/pytorch/huggingface/bigpython_bigquery_thepile/base-none",
-        config=config,
-    )
-
-    output = llm("def ")
+    output = llm("Once upon a time")
     assert isinstance(output, str)
     assert len(output) > 1
     assert output == "ids_to_names"
 
 def test_deepsparse_async() -> None:
-    import time
-    import asyncio
-
-    MODEL_ID = "mgoin/TinyStories-1M-deepsparse"
-    from huggingface_hub import snapshot_download
-    MODEL_PATH = snapshot_download(repo_id=MODEL_ID)
-
     config = {"prompt_sequence_length": 1}
     llm = DeepSparse(model=MODEL_PATH, config=config)
 
