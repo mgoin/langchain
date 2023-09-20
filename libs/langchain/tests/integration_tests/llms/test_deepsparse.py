@@ -1,6 +1,6 @@
 """Test DeepSparse wrapper."""
-import time
 import asyncio
+import time
 
 from huggingface_hub import snapshot_download
 from langchain.llms import DeepSparse
